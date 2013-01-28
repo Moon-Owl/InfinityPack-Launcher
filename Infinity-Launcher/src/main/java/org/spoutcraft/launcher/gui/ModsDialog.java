@@ -23,14 +23,14 @@ import javax.swing.SwingConstants;
 
 public class ModsDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -6662344712140426961L;
-	private final JPanel contentPanel = new JPanel();
-	protected JToggleButton[] modLists;
-	protected Map<Integer, ButtonGroup> groups;
+	private static final JPanel contentPanel = new JPanel();
+	protected static JToggleButton[] modLists;
+	protected static Map<Integer, ButtonGroup> groups;
 
 	/**
 	 * Create the dialog.
 	 */
-	public ModsDialog(List<Map<String, String>> modNameList) {
+	public void ModsDialog(List<Map<String, String>> modNameList) {
 		setTitle("Select Mods to Install");
 		setBounds(100, 100, 616, 492);
 		getContentPane().setLayout(new BorderLayout());
@@ -136,5 +136,6 @@ public class ModsDialog extends JDialog implements ActionListener {
 			this.dispose();
 		}
 	}
+
 
 }

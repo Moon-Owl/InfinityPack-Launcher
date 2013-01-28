@@ -26,6 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.crypto.Cipher;
@@ -40,6 +41,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -135,6 +137,7 @@ public class MainPane extends JFrame implements ActionListener,
 	JTextField urlText = new JTextField();
 	private TumblerFeedParsingWorker         tumblerFeed;
 	private JTextPane editorPane_2;
+	private ModsDialog ModsDialog;
 	public MainPane() {
 		loadLauncherData();
 
@@ -270,6 +273,7 @@ public class MainPane extends JFrame implements ActionListener,
 
 		modsButton.setFont(new Font("SansSerif", Font.BOLD, 15));
 		modsButton.setBounds(6, 224, 247, 55);
+		modsButton.addActionListener(this);
 		mainPanel.add(modsButton);
 
 		loginSkin1 = new JButton("Login as Player");
@@ -655,10 +659,7 @@ public class MainPane extends JFrame implements ActionListener,
 
 			options.setBounds((int) getBounds().getCenterX() - 250,
 					(int) getBounds().getCenterY() - 75, 360, 325);
-		} else if (eventId.equals(modsButton.getText())) {
-			if (ModPackListYML.currentModPack != null) {
-				open(new File(GameUpdater.modconfigsDir, "ModLoader.cfg"));
-			}
+		
 		} else if (eventId.equals("comboBoxChanged")) {
 			updatePasswordField();
 		}
@@ -680,8 +681,16 @@ public class MainPane extends JFrame implements ActionListener,
 								getParent(),
 								"Failed to clear the cache! Ensure Modpack files are open.\nIf all else fails, close the launcher, restart it, and try again.");
 			}
+			
+		}
+		if (eventId.equals("Add/Remove Mods")) {
+		
+				open(new File(GameUpdater.modconfigsDir, "ModLoader.cfg"));
+				ModsDialog = new ModsDialog();
+			
 		}
 	}
+
 
 	public static void open(File document) {
 		if (!document.exists())
@@ -1029,6 +1038,7 @@ public class MainPane extends JFrame implements ActionListener,
 	public void windowOpened(WindowEvent e) {
 		tumblerFeed = new TumblerFeedParsingWorker(editorPane_2);
 	    tumblerFeed.execute();
+	    
 
 	}
 
